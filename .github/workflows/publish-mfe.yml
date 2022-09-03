@@ -7,6 +7,8 @@ on:
         required: true
       firebase_auth:
         required: true
+      firebase_token:
+        required: true
 
 jobs:
   publish:
@@ -37,3 +39,5 @@ jobs:
     - run: npm ci
     - run: npm run build
     - run: npm run publish-mfe -- --firebaseAuth ${{ secrets.firebase_auth }}
+    - run: npm install -g firebase-tools
+    - run: firebase login:ci --token ${{ secrets.firebase_token }}
