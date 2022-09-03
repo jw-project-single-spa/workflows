@@ -9,6 +9,8 @@ on:
         required: true
       firebase_token:
         required: true
+      firebase_project:
+        required: true
 
 jobs:
   publish:
@@ -36,8 +38,8 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+    - run: npm install -g firebase-tools
     - run: npm ci
     - run: npm run build
     - run: npm run publish-mfe -- --firebaseAuth ${{ secrets.firebase_auth }}
-    - run: npm install -g firebase-tools
-    - run: firebase login:ci --token ${{ secrets.firebase_token }}
+    - run: firebase deploy --only hosting --token ${{ secrets.firebase_token }} -P ${{ secrets.firebase_project }}
