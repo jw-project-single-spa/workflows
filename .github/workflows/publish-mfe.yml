@@ -44,4 +44,6 @@ jobs:
     - run: npm ci
     - run: npm run build
     - run: npm run publish-mfe -- --firebaseAuth ${{ secrets.firebase_auth }}
-    - run: firebase deploy --only hosting --token ${{ secrets.firebase_token }} -P ${{ inputs.firebase_project }}
+    - run: firebase use ${{ inputs.firebase_project }}
+    - run: firebase target:apply hosting static ${{ inputs.firebase_project }}-static
+    - run: firebase deploy --only hosting:static --token ${{ secrets.firebase_token }} -P ${{ inputs.firebase_project }}
