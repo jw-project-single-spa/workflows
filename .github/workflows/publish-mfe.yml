@@ -2,14 +2,16 @@ name: Publish MFE
 
 on:
   workflow_call:
+    inputs:
+      firebase_project:
+        required: true
+        type: string
     secrets:
       package_token:
         required: true
       firebase_auth:
         required: true
       firebase_token:
-        required: true
-      firebase_project:
         required: true
 
 jobs:
@@ -42,4 +44,4 @@ jobs:
     - run: npm ci
     - run: npm run build
     - run: npm run publish-mfe -- --firebaseAuth ${{ secrets.firebase_auth }}
-    - run: firebase deploy --only hosting --token ${{ secrets.firebase_token }} -P ${{ secrets.firebase_project }}
+    - run: firebase deploy --only hosting --token ${{ secrets.firebase_token }} -P ${{ inputs.firebase_project }}
