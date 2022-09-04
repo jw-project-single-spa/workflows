@@ -2,16 +2,14 @@ name: Publish MFE
 
 on:
   workflow_call:
-    inputs:
-      firebase_project:
-        required: true
-        type: string
     secrets:
       package_token:
         required: true
       firebase_auth:
         required: true
       firebase_token:
+        required: true
+      firebase_project:
         required: true
 
 jobs:
